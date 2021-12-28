@@ -98,5 +98,18 @@ public class Cliente {
 		
 		return salida;
 	}
+	
+	public String enviadasRecibidas() {
+		String salida = "";
+		salida += "Encomiendas enviadas por el cliente: \n";
+		for(int i=0; i<entregasE.size(); i++) {
+			salida +=entregasE.get(i).getCodigo() +"\n";
+		}
+		salida += "Encomiendas recibidas por el cliente: \n";
+		for(int i=0; i<entregasR.size(); i++) {
+			salida +=entregasR.get(i).getCodigo() +"\n";
+		}
+		return salida;
+	}
 
 }
