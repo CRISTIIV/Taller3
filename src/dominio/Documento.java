@@ -18,8 +18,7 @@ public class Documento extends Entrega{
 
 	@Override
 	public double calcularPrecio() {
-		// TODO Auto-generated method stub
-		return 0;
+		return (this.getPeso()*grosor*100);
 	}
 	
 	public String toStringDocumento() {
