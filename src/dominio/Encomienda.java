@@ -31,8 +31,8 @@ public class Encomienda extends Entrega{
 	}
 	@Override
 	public double calcularPrecio() {
-		// TODO Auto-generated method stub
-		return 0;
+		int volumen = this.getAncho()*this.getDeep()*this.getLargo();
+		return (this.getPeso()*volumen*50);
 	}
 	
 	public String toStringEncomienda() {
