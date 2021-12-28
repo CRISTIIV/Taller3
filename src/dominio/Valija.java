@@ -18,8 +18,17 @@ public class Valija extends Entrega{
 
 	@Override
 	public double calcularPrecio() {
-		// TODO Auto-generated method stub
-		return 0;
+		double precio = 0;
+		if (this.material.equals("Cuero")) {
+			precio = (200*this.getPeso()*150);
+		}
+		if (this.material.equals("Plastico")) {
+			precio = (150*this.getPeso()*150);
+		}
+		if (this.material.equals("Tela")) {
+			precio = (100*this.getPeso()*150);
+		}
+		return precio;
 	}
 	
 	public String toStringValija() {
