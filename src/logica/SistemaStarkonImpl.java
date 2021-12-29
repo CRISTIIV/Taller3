@@ -41,8 +41,8 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 	}
 
 	@Override
-	public void agregarDocumento(int peso, String codigo, String rutRemitente, String rutDestinatario, int grosor) {
-		Documento d = new Documento(peso,codigo,rutRemitente,rutDestinatario,grosor);
+	public void agregarDocumento(int peso, String codigo, String rutRemitente, String rutDestinatario, String tipo, int grosor) {
+		Documento d = new Documento(peso,codigo,rutRemitente,rutDestinatario,tipo,grosor);
 		for(Cliente cliente:clientes) {
 			if(cliente.getRut().equals(rutRemitente)) {
 				cliente.getEntregasE().add(d);
@@ -58,8 +58,8 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 	}
 
 	@Override
-	public void agregarEncomienda(int peso, String codigo, String rutRemitente, String rutDestinatario, int largo, int ancho, int profundidad) {
-		Encomienda e = new Encomienda(peso,codigo,rutRemitente,rutDestinatario,largo,ancho,profundidad);
+	public void agregarEncomienda(int peso, String codigo, String rutRemitente, String rutDestinatario, String tipo, int largo, int ancho, int profundidad) {
+		Encomienda e = new Encomienda(peso,codigo,rutRemitente,rutDestinatario,tipo,largo,ancho,profundidad);
 		for(Cliente cliente:clientes) {
 			if(cliente.getRut().equals(rutRemitente)) {
 				cliente.getEntregasE().add(e);
@@ -75,8 +75,8 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 	}
 
 	@Override
-	public void agregarValija(int peso, String codigo, String rutRemitente, String rutDestinatario, String material) {
-		Valija v = new Valija(peso,codigo,rutRemitente,rutDestinatario,material);
+	public void agregarValija(int peso, String codigo, String rutRemitente, String rutDestinatario, String tipo, String material) {
+		Valija v = new Valija(peso,codigo,rutRemitente,rutDestinatario,tipo,material);
 		for(Cliente cliente:clientes) {
 			if(cliente.getRut().equals(rutRemitente)) {
 				cliente.getEntregasE().add(v);
@@ -90,34 +90,18 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 		entregas.add(v);
 		valijas.add(v);
 	}
-	
-	/*
-	@Override
-	public void asociarEntregaRemitenteDestinatario(String codigo, String rutRemitente, String rutDestinatario) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void asociarLocalidadCliente(String rutCliente, String ciudad) {
-		Cliente cliente = null;
-		for(Cliente client:clientes) {
-			if(client.getRut().equals(rutCliente))cliente = (Cliente)client;
-		}
-		for(Localizacion localizacion:localizaciones) {
-			if(localizacion.getNombre().equals(ciudad)) {
-				cliente.g
+	/*@Override//HACER EN LA APP DIRECTO
+	public void realizarEntrega(String rutRemitente, String tipoPaquete, String rutDestinatario) {
+		//En la app hacer llamado sistema.agregarDocumento(...) y los parámetros serían los ingresados por pantalla.
+		for (Cliente cliente:clientes) {
+			if(cliente.getRut().equals(rutRemitente) && tipoPaquete.equals("D")) {
+				Documento d = new Documento();
+				cliente.disminuirSaldo(0);
 			}
 		}
-		
 	}*/
-
-	@Override
-	public void realizarEntrega(String rutRemitente, String tipoPaquete, String rutDestinatario) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public void recargarSaldo(String rutCliente, int saldo) {
 		for(Cliente cliente:clientes) {
@@ -130,6 +114,40 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 		throw new NullPointerException("No existe el cliente seleccionado");
 		
 	}
+
+	@Override
+	public String obtenerClientes() {
+		String salida = "";
+		for (int i = 0; i < clientes.size(); i++) {
+			Cliente c = clientes.get(i);
+			salida += c.getRut()+","+c.getNombre()+","+c.getApellido()+","+c.getSaldo()+","+c.getCiudad();
+		}
+		return salida;
+	}
+
+
+	@Override
+	public String obtenerEntregas() {
+		String salida = "";
+		for (int i = 0; i<entregas.size(); i++) {
+			Entrega e = entregas.get(i);
+			salida += e.getCodigo()+","+e.getTipo()+","+e.getRutRemitente()+","+e.getRutDestinatario()+",";
+			if(e instanceof Documento) {
+				Documento d = (Documento)e;
+				salida += d.getPeso()+","+d.getGrosor();
+			}
+			if(e instanceof Encomienda) {
+				Encomienda d = (Encomienda)e;
+				salida += d.getPeso()+","+d.getLargo()+","+d.getAncho()+","+d.getDeep();
+			}
+			if(e instanceof Valija) {
+				Valija d = (Valija)e;
+				salida += d.getMaterial()+","+d.getPeso();
+			}
+		}
+		return salida;
+	}
+
 
 	@Override
 	public String iniciarSesion(String rut) {
@@ -162,26 +180,78 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 
 	@Override
 	public String obtenerEntregasPorTipo() {
-		// TODO Auto-generated method stub
-		return null;
+		String salida = "";
+		String documentos = "Entregas del tipo documento: \n";
+		String encomiendas = "\nEntregas del tipo encomienda: \n";
+		String valijas = "\nEntregas del tipo valija: \n";
+		for (int i = 0; i < entregas.size(); i++) {
+			Entrega entrega = entregas.get(i);
+			if (entrega.getTipo().equals("D")) {
+				documentos += entrega.toStringEntrega();
+			}
+			if (entrega.getTipo().equals("E")) {
+				encomiendas += entrega.toStringEntrega();
+			}
+			if (entrega.getTipo().equals("V")) {
+				valijas += entrega.toStringEntrega();
+			}
+		}
+		salida += documentos+encomiendas+valijas;
+		return salida;
 	}
 
 	@Override
 	public String obtenerEntregasClientes() {
-		// TODO Auto-generated method stub
-		return null;
+		String salida = "";
+		for (int i = 0; i<clientes.size();i++) {
+			Cliente c = clientes.get(i);
+			salida += c.toStringCliente();
+		}
+		return salida;
 	}
 
 	@Override
 	public String obtenerDatosOficinas() {
-		// TODO Auto-generated method stub
-		return null;
+		String salida = "Entregas por localizacion: \n";
+		for (int i = 0; i<localizaciones.size(); i++) {
+			int cantR = 0;
+			int cantE = 0;
+			Localizacion l = localizaciones.get(i);
+			salida += "En "+l.getNombre()+" se realizaron: \n";
+			for (int j = 0; j<clientes.size(); i++) {
+				Cliente c = clientes.get(i);
+				if(c.getCiudad().equals(l.getNombre())) {
+					cantE += c.getEntregasE().size();
+					cantR += c.getEntregasR().size();
+				}
+			}
+			salida += cantE+" envios y "+cantR+" recepciones de entregas.\n";
+		}
+		return salida;
 	}
 
 	@Override
 	public String obtenerGananciasOficinas() {
-		// TODO Auto-generated method stub
-		return null;
+		int total = 0;
+		String salida = "Ganancias por localizacion: ";
+		for (int i = 0; i<localizaciones.size(); i++) {
+			int cont = 0;
+			Localizacion l = localizaciones.get(i);
+			salida += "\nEn "+l.getNombre()+" se recaudaron: ";
+			for (int j = 0; j<clientes.size(); i++) {
+				Cliente c = clientes.get(i);
+				if(c.getCiudad().equals(l.getNombre())) {
+					for(int m = 0; m<c.getEntregasR().size(); m++) {
+						Entrega e = c.getEntregasR().get(m);
+						cont += e.calcularPrecio();
+					}
+				}
+			}
+			salida += "$"+cont+".\n";
+			total += cont;
+		}
+		salida += "Y a nivel nacional se recaudaron: $"+total;
+		return salida;
 	}
 
 }
