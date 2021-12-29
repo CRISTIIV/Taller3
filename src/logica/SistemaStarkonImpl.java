@@ -175,7 +175,7 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 		String salida = "";
 		for (int i = 0; i < clientes.size(); i++) {
 			Cliente c = clientes.get(i);
-			salida += c.getRut()+","+c.getNombre()+","+c.getApellido()+","+c.getSaldo()+","+c.getCiudad();
+			salida += c.getRut()+","+c.getNombre()+","+c.getApellido()+","+c.getSaldo()+","+c.getCiudad()+"\n";
 		}
 		return salida;
 	}
@@ -189,15 +189,15 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 			salida += e.getCodigo()+","+e.getTipo()+","+e.getRutRemitente()+","+e.getRutDestinatario()+",";
 			if(e instanceof Documento) {
 				Documento d = (Documento)e;
-				salida += d.getPeso()+","+d.getGrosor();
+				salida += d.getPeso()+","+d.getGrosor()+"\n";
 			}
 			if(e instanceof Encomienda) {
 				Encomienda d = (Encomienda)e;
-				salida += d.getPeso()+","+d.getLargo()+","+d.getAncho()+","+d.getDeep();
+				salida += d.getPeso()+","+d.getLargo()+","+d.getAncho()+","+d.getDeep()+"\n";
 			}
 			if(e instanceof Valija) {
 				Valija d = (Valija)e;
-				salida += d.getMaterial()+","+d.getPeso();
+				salida += d.getMaterial()+","+d.getPeso()+"\n";
 			}
 		}
 		return salida;
