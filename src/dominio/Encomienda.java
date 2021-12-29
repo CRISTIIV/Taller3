@@ -4,9 +4,9 @@ public class Encomienda extends Entrega{
 	private int largo;
 	private int ancho;
 	private int deep;
-	public Encomienda(int peso, String codigo, String rutRemitente, String rutDestinatario, int largo, int ancho,
+	public Encomienda(int peso, String codigo, String rutRemitente, String rutDestinatario, String tipo, int largo, int ancho,
 			int deep) {
-		super(peso, codigo, rutRemitente, rutDestinatario);
+		super(peso, codigo, rutRemitente, rutDestinatario, tipo);
 		this.largo = largo;
 		this.ancho = ancho;
 		this.deep = deep;
@@ -32,10 +32,10 @@ public class Encomienda extends Entrega{
 	@Override
 	public double calcularPrecio() {
 		int volumen = this.getAncho()*this.getDeep()*this.getLargo();
-		return (this.getPeso()*volumen*50);
+		return ((this.getPeso()*0.001)*volumen*50);
 	}
 	
 	public String toStringEncomienda() {
-		return "Tipo de entrega: Encomienda, Ancho de la encomienda: "+ancho+"m, Largo de la encomienda: "+largo+"m, Profundidad de la encomienda: "+deep+"m, "+super.toStringEntrega()+"\n";
+		return "Tipo de entrega: Encomienda, Ancho de la encomienda: "+ancho+"m, Largo de la encomienda: "+largo+"m, Profundidad de la encomienda: "+deep+"m, Valor de la entrega: $"+calcularPrecio()+", "+super.toStringEntrega()+"\n";
 	}
 }
