@@ -222,9 +222,14 @@ public class App {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Ingrese su rut: ");
 		String rut = sc.nextLine();
-		String rutFormat = validarRut(rut);
-		String inicioSesion = sistema.iniciarSesion(rutFormat);
-		return inicioSesion;
+		if(!rut.equals("Admin")) {
+			String rutFormat = validarRut(rut);
+			String inicioSesion1 = sistema.iniciarSesion(rutFormat);
+			return inicioSesion1;
+		}else {
+			String inicioSesion2 = sistema.iniciarSesion(rut);
+			return (inicioSesion2);
+		}
 	}
 	
 	private static void lecturArchivos(SistemaStarkon sistema) {
