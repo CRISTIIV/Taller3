@@ -294,45 +294,46 @@ public class App {
 			String tipo = parte[1];
 			String rutRemitente = parte[2];
 			String rutDestinatario = parte[3];
-			/*
+			
 			if(tipo.equals("D")) {
 				int pesoG = Integer.parseInt(parte[4]);
 				int grosorMm = Integer.parseInt(parte[5]);
 				sistema.agregarDocumento(pesoG, codigo, rutRemitente, rutDestinatario, tipo, grosorMm);
 			}
 			if(tipo.equals("E")) {
-				int pesoG = Integer.parseInt(parte[4]);
+				int pesoE = Integer.parseInt(parte[4]);
 				int largoCm = Integer.parseInt(parte[5]);
 				int anchoCm = Integer.parseInt(parte[6]);
 				int deepCm = Integer.parseInt(parte[7]);
-				sistema.agregarEncomienda(pesoG, codigo, rutRemitente, rutDestinatario, tipo, largoCm, anchoCm, deepCm);
+				sistema.agregarEncomienda(pesoE, codigo, rutRemitente, rutDestinatario, tipo, largoCm, anchoCm, deepCm);
 			}
 			if(tipo.equals("V")) {
 				String material = parte[4];
-				int pesoG = Integer.parseInt(parte[5]);
-				sistema.agregarValija(pesoG, codigo, rutRemitente, rutDestinatario, tipo, material);
-			}*/
+				int pesoV = Integer.parseInt(parte[5]);
+				sistema.agregarValija(pesoV, codigo, rutRemitente, rutDestinatario, tipo, material);
+			}
 			//LO VERDE ES EN VEZ DE ESTO:
+			/*
 			switch(tipo) {
-				case "D":
-					int pesoD = Integer.parseInt(parte[4]);
-					int grosorMm = Integer.parseInt(parte[5]);
-					sistema.agregarDocumento(pesoD, codigo, rutRemitente, rutDestinatario, tipo, grosorMm);
-					
-					break;
-				case "E":
-					int pesoE = Integer.parseInt(parte[4]);
-					int largoCm = Integer.parseInt(parte[5]);
-					int anchoCm = Integer.parseInt(parte[6]);
-					int deepCm = Integer.parseInt(parte[7]);
-					sistema.agregarEncomienda(pesoE, codigo, rutRemitente, rutDestinatario, tipo, largoCm, anchoCm, deepCm);
-					break;
-				case "V":
-					String material = parte[4];
-					int pesoV = Integer.parseInt(parte[5]);
-					sistema.agregarValija(pesoV, codigo, rutRemitente, rutDestinatario, tipo, material);
-					break;
-				}
+			case "D":
+				int pesoD = Integer.parseInt(parte[4]);
+				int grosorMm = Integer.parseInt(parte[5]);
+				sistema.agregarDocumento(pesoD, codigo, rutRemitente, rutDestinatario, tipo, grosorMm);
+				
+				break;
+			case "E":
+				int pesoE = Integer.parseInt(parte[4]);
+				int largoCm = Integer.parseInt(parte[5]);
+				int anchoCm = Integer.parseInt(parte[6]);
+				int deepCm = Integer.parseInt(parte[7]);
+				sistema.agregarEncomienda(pesoE, codigo, rutRemitente, rutDestinatario, tipo, largoCm, anchoCm, deepCm);
+				break;
+			case "V":
+				String material = parte[4];
+				int pesoV = Integer.parseInt(parte[5]);
+				sistema.agregarValija(pesoV, codigo, rutRemitente, rutDestinatario, tipo, material);
+				break;
+			}*/
 		}
 	}
 }
