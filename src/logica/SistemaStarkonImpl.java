@@ -249,10 +249,10 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 		if(client==null) {
 			return "Registrar";
 		}
-		if(!rut.equals("Admin")) {
-			return "Cliente-"+client.getNombre()+" "+client.getApellido();
-		}else {
+		if(rut.equals("Admin")) {
 			return "Admin";
+		}else {
+			return "Cliente-"+client.getNombre()+" "+client.getApellido();
 		}
 	}
 
