@@ -206,6 +206,7 @@ public class App {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Ingrese su rut: ");
 		String rut = sc.nextLine();
+		String rutFor = validarRut(rut);
 		System.out.println("Ingrese su nombre: ");
 		String nombre = sc.nextLine();
 		System.out.println("Ingrese su apellido: ");
@@ -214,7 +215,7 @@ public class App {
 		int saldo = Integer.parseInt(sc.nextLine());
 		System.out.println("Ingrese su localidad: ");
 		String ciudad = sc.nextLine();
-		if(sistema.agregarCliente(rut, nombre, apellido, saldo, ciudad))System.out.println("Resgitro exitoso.");
+		if(sistema.agregarCliente(rutFor, nombre, apellido, saldo, ciudad))System.out.println("Resgitro exitoso.");
 	}
 	
 	private static String iniciarSesion(SistemaStarkon sistema) {
