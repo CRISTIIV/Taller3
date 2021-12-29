@@ -91,17 +91,72 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 		valijas.add(v);
 	}
 
-	/*@Override//HACER EN LA APP DIRECTO
-	public void realizarEntrega(String rutRemitente, String tipoPaquete, String rutDestinatario) {
-		//En la app hacer llamado sistema.agregarDocumento(...) y los parámetros serían los ingresados por pantalla.
+	@Override
+	public void realizarEntregaDocumento(String rutRemitente,String codigo, String rutDestinatario, int peso, int grosor) {
 		for (Cliente cliente:clientes) {
-			if(cliente.getRut().equals(rutRemitente) && tipoPaquete.equals("D")) {
-				Documento d = new Documento();
-				cliente.disminuirSaldo(0);
-			}
-		}
-	}*/
+			for (Cliente cliente2:clientes) {
+				if(cliente.getRut().equals(rutRemitente) && cliente2.getRut().equals(rutDestinatario)) {
+					Documento d = new Documento(peso,codigo,rutRemitente,rutDestinatario,"D",grosor);
+					int precio = (int)Math.round(d.calcularPrecio());
+					if (cliente.getSaldo() >= precio) {
+						cliente.disminuirSaldo(precio);
+						cliente.getEntregasE().add(d);
+						cliente2.getEntregasR().add(d);
+					}
+					else {
+						System.out.println("No tiene suficiente saldo para realizar la entrega.");
+					}
+				}
+			}throw new NullPointerException("No existe el destinatario.");
+		}throw new NullPointerException("No existe el remitente.");
+	}
 	
+	
+	
+	@Override
+	public void realizarEntregaEncomienda(String rutRemitente, String codigo, String rutDestinatario, int peso, int largo, int ancho, int profundidad) {
+		for (Cliente cliente:clientes) {
+			for (Cliente cliente2:clientes) {
+				if(cliente.getRut().equals(rutRemitente) && cliente2.getRut().equals(rutDestinatario)) {
+					Encomienda d = new Encomienda(peso,codigo,rutRemitente,rutDestinatario,"E",largo,ancho,profundidad);
+					int precio = (int)Math.round(d.calcularPrecio());
+					if (cliente.getSaldo() >= precio) {
+						cliente.disminuirSaldo(precio);
+						cliente.getEntregasE().add(d);
+						cliente2.getEntregasR().add(d);
+					}
+					else {
+						System.out.println("No tiene suficiente saldo para realizar la entrega.");
+					}
+				}
+			}throw new NullPointerException("No existe el destinatario.");
+		}throw new NullPointerException("No existe el remitente.");
+		
+	}
+
+
+	@Override
+	public void realizarEntregaValija(String rutRemitente, String codigo, String rutDestinatario, int peso, String material) {
+		for (Cliente cliente:clientes) {
+			for (Cliente cliente2:clientes) {
+				if(cliente.getRut().equals(rutRemitente) && cliente2.getRut().equals(rutDestinatario)) {
+					Valija d = new Valija(peso,codigo,rutRemitente,rutDestinatario,"D",material);
+					int precio = (int)Math.round(d.calcularPrecio());
+					if (cliente.getSaldo() >= precio) {
+						cliente.disminuirSaldo(precio);
+						cliente.getEntregasE().add(d);
+						cliente2.getEntregasR().add(d);
+					}
+					else {
+						System.out.println("No tiene suficiente saldo para realizar la entrega.");
+					}
+				}
+			}throw new NullPointerException("No existe el destinatario.");
+		}throw new NullPointerException("No existe el remitente.");
+		
+	}
+
+
 	@Override
 	public void recargarSaldo(String rutCliente, int saldo) {
 		for(Cliente cliente:clientes) {
@@ -186,14 +241,17 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 		String valijas = "\nEntregas del tipo valija: \n";
 		for (int i = 0; i < entregas.size(); i++) {
 			Entrega entrega = entregas.get(i);
-			if (entrega.getTipo().equals("D")) {
-				documentos += entrega.toStringEntrega();
+			if (entrega instanceof Documento) {
+				Documento d = (Documento)entrega;
+				documentos += d.toStringDocumento();
 			}
-			if (entrega.getTipo().equals("E")) {
-				encomiendas += entrega.toStringEntrega();
+			if (entrega instanceof Encomienda) {
+				Encomienda e = (Encomienda)entrega;
+				encomiendas += e.toStringEncomienda();
 			}
-			if (entrega.getTipo().equals("V")) {
-				valijas += entrega.toStringEntrega();
+			if (entrega instanceof Valija) {
+				Valija v = (Valija)entrega;
+				valijas += v.toStringEntrega();
 			}
 		}
 		salida += documentos+encomiendas+valijas;
