@@ -222,13 +222,13 @@ public class App {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Ingrese su rut: ");
 		String rut = sc.nextLine();
-		if(!rut.equals("Admin")) {
+		if(rut.equals("Admin")) {
+			String inicioSesion2 = sistema.iniciarSesion(rut);
+			return (inicioSesion2);
+		}else {
 			String rutFormat = validarRut(rut);
 			String inicioSesion1 = sistema.iniciarSesion(rutFormat);
 			return inicioSesion1;
-		}else {
-			String inicioSesion2 = sistema.iniciarSesion(rut);
-			return (inicioSesion2);
 		}
 	}
 	
@@ -300,25 +300,6 @@ public class App {
 			String rutRemitente = parte[2];
 			String rutDestinatario = parte[3];
 			
-			if(tipo.equals("D")) {
-				int pesoG = Integer.parseInt(parte[4]);
-				int grosorMm = Integer.parseInt(parte[5]);
-				sistema.agregarDocumento(pesoG, codigo, rutRemitente, rutDestinatario, tipo, grosorMm);
-			}
-			if(tipo.equals("E")) {
-				int pesoE = Integer.parseInt(parte[4]);
-				int largoCm = Integer.parseInt(parte[5]);
-				int anchoCm = Integer.parseInt(parte[6]);
-				int deepCm = Integer.parseInt(parte[7]);
-				sistema.agregarEncomienda(pesoE, codigo, rutRemitente, rutDestinatario, tipo, largoCm, anchoCm, deepCm);
-			}
-			if(tipo.equals("V")) {
-				String material = parte[4];
-				int pesoV = Integer.parseInt(parte[5]);
-				sistema.agregarValija(pesoV, codigo, rutRemitente, rutDestinatario, tipo, material);
-			}
-			//LO VERDE ES EN VEZ DE ESTO:
-			/*
 			switch(tipo) {
 			case "D":
 				int pesoD = Integer.parseInt(parte[4]);
@@ -338,7 +319,7 @@ public class App {
 				int pesoV = Integer.parseInt(parte[5]);
 				sistema.agregarValija(pesoV, codigo, rutRemitente, rutDestinatario, tipo, material);
 				break;
-			}*/
+			}
 		}
 	}
 }
