@@ -43,6 +43,8 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 	@Override
 	public void agregarDocumento(int peso, String codigo, String rutRemitente, String rutDestinatario, String tipo, int grosor) {
 		Documento d = new Documento(peso,codigo,rutRemitente,rutDestinatario,tipo,grosor);
+		//V1:
+		/*
 		for(Cliente cliente:clientes) {
 			if(cliente.getRut().equals(rutRemitente)) {
 				cliente.getEntregasE().add(d);
@@ -52,6 +54,15 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 				cliente.getEntregasR().add(d);
 				break;
 			}
+		}*/
+		//V2
+		for(Cliente cliente:clientes) {
+			for(Cliente cliente2:clientes) {
+				if(cliente.getRut().equals(rutRemitente) && cliente2.getRut().equals(rutDestinatario)) {
+					cliente.getEntregasE().add(d);
+					cliente2.getEntregasR().add(d);
+				}
+			}
 		}
 		entregas.add(d);
 		documentos.add(d);
@@ -60,6 +71,8 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 	@Override
 	public void agregarEncomienda(int peso, String codigo, String rutRemitente, String rutDestinatario, String tipo, int largo, int ancho, int profundidad) {
 		Encomienda e = new Encomienda(peso,codigo,rutRemitente,rutDestinatario,tipo,largo,ancho,profundidad);
+		//V1:
+		/*
 		for(Cliente cliente:clientes) {
 			if(cliente.getRut().equals(rutRemitente)) {
 				cliente.getEntregasE().add(e);
@@ -69,6 +82,15 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 				cliente.getEntregasR().add(e);
 				break;
 			}
+		}*/
+		//V2:
+		for(Cliente cliente:clientes) {
+			for(Cliente cliente2:clientes) {
+				if(cliente.getRut().equals(rutRemitente) && cliente2.getRut().equals(rutDestinatario)) {
+					cliente.getEntregasE().add(e);
+					cliente2.getEntregasR().add(e);
+				}
+			}
 		}
 		entregas.add(e);
 		encomiendas.add(e);
@@ -77,6 +99,8 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 	@Override
 	public void agregarValija(int peso, String codigo, String rutRemitente, String rutDestinatario, String tipo, String material) {
 		Valija v = new Valija(peso,codigo,rutRemitente,rutDestinatario,tipo,material);
+		//V1:
+		/*
 		for(Cliente cliente:clientes) {
 			if(cliente.getRut().equals(rutRemitente)) {
 				cliente.getEntregasE().add(v);
@@ -86,6 +110,15 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 				cliente.getEntregasR().add(v);
 				break;
 			}
+		}*/
+		//V2:
+		for(Cliente cliente:clientes) {
+			for(Cliente cliente2:clientes) {
+				if(cliente.getRut().equals(rutRemitente) && cliente2.getRut().equals(rutRemitente)) {
+					cliente.getEntregasE().add(v);
+					cliente2.getEntregasR().add(v);
+				}
+			}
 		}
 		entregas.add(v);
 		valijas.add(v);
@@ -93,6 +126,7 @@ public class SistemaStarkonImpl implements SistemaStarkon{
 
 	@Override
 	public void realizarEntregaDocumento(String rutRemitente,String codigo, String rutDestinatario, int peso, int grosor) {
+		//En la app hacer llamado sistema.agregarDocumento(...) y los parámetros serían los ingresados por pantalla.
 		for (Cliente cliente:clientes) {
 			for (Cliente cliente2:clientes) {
 				if(cliente.getRut().equals(rutRemitente) && cliente2.getRut().equals(rutDestinatario)) {
